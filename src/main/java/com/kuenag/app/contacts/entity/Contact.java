@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name="CONTACT")
 @Table(name = "CHARACTER_INFO")
 @NoArgsConstructor
 @ToString
