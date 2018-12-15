@@ -18,10 +18,10 @@ If you want to configure application properties edit the file application.proper
     app.contact.list.file.path=C:\\tmp\\people.csv  # put here the path of file in your machine
     app.contact.list.file.token.separator=,         # separator token configurable in csv
     
-    spring.datasource.url=jdbc:oracle:thin:workbrain@//localhost:1521/EE.oracle.docker
-    spring.datasource.username=workbrain
-    spring.datasource.password=workbrain
-    spring.datasource.driver.class-name=oracle.jdbc.driver.OracleDriver
+    #spring.datasource.url=jdbc:oracle:thin:workbrain@//localhost:1521/EE.oracle.docker
+    #spring.datasource.username=workbrain
+    #spring.datasource.password=workbrain
+    #spring.datasource.driver.class-name=oracle.jdbc.driver.OracleDriver
 ```
 
  If you want to use a database conection is also necesary configure the table and columns names in the entity \src\main\java\com\kuenag\app\contacts\entity\Contact.java using your table name and columns (remember that this table must have an ID attribute to be used for JPA). Once configurations were done, save changes.
