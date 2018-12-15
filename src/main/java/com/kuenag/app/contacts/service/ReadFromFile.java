@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,9 @@ public class ReadFromFile implements SourceReadable {
     @Value("${app.contact.list.file.path}")
     private String pathFile;
 
+    @Value("${app.contact.list.file.default.path}")
+    private String defaultPathFile;
+
     @Value("${app.contact.list.file.token.separator}")
     private String tokenSeparator;
 
@@ -33,7 +37,7 @@ public class ReadFromFile implements SourceReadable {
         List<Contact> contactList = new ArrayList<>();
         log.info("Accessing file in path: {}", pathFile);
         try {
-            List<String> linesFromFile = Files.readAllLines(Paths.get(pathFile));
+            List<String> linesFromFile = Files.readAllLines(Paths.get(readPath()));
             for (int i = validateHeaders(); i < linesFromFile.size(); i++) {
                 contactList.add(buildContactData(linesFromFile.get(i)));
             }
@@ -72,12 +76,33 @@ public class ReadFromFile implements SourceReadable {
         }
     }
 
+    private static boolean isValidPath(String path) {
+        log.info("Validating if path file is valid: {}", path);
+        try {
+            new URL(path).toURI();
+            return true;
+        } catch (Exception e) {
+            log.info("Is not a valid path: {}", path);
+            return false;
+        }
+    }
+
     private int validateHeaders() {
         log.info("Validating if file has headers names: {}", hasHeaders);
         if ("Y".equalsIgnoreCase(hasHeaders)) {
             return 1;
         } else {
             return 0;
+        }
+    }
+
+    private String readPath(){
+        if(isValidPath(pathFile))
+            return pathFile;
+        else {
+            File directory = new File("");
+            log.info("Using default file in project folder: {}",directory.getAbsolutePath() + defaultPathFile);
+            return directory.getAbsolutePath() + defaultPathFile;
         }
     }
 
