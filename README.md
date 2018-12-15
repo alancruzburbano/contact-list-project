@@ -11,7 +11,7 @@ To install server apllication, run the following commands:
 git clone https://github.com/alancruzburbano/contact-list-project-server.git
 cd contact-list-project-server
 ```
-If you want to configure application properties edit the file application.properties in the path (/src/main/resources/application.properties) there you can set the incoming file properties and connection to database properties.
+If you want to configure application properties edit the file application.properties in the path (/src/main/resources/application.properties) there you can set the file configurations, if you have a connection to database uncoment the group of properties spring.datasource and set the required values
 
 ```ruby
     app.contact.list.file.headers=Y                 # validate if incoming file contains headers line
@@ -29,7 +29,7 @@ If you want to configure application properties edit the file application.proper
 To run the serverapplication, just execute the following command:
  
 ```bash
-./mvnw spring-boot:run
+./gradlew bootRun
 ```
 
 ## Help
