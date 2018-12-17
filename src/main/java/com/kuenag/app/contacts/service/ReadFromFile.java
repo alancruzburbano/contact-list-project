@@ -31,6 +31,12 @@ public class ReadFromFile implements SourceReadable {
     @Value("${app.contact.list.file.token.separator}")
     private String tokenSeparator;
 
+    /**
+     * Contact list from file stored in customized path or default path, the parameters comes from application.properties
+     * if the system cannot find the path from  app.contact.list.file.path then will use app.contact.list.file.default.path that
+     * will use the file placed inside the project.
+     * @return  contact list
+     */
     @Override
     public List<Contact> readItems() {
         List<Contact> contactList = new ArrayList<>();
@@ -46,6 +52,11 @@ public class ReadFromFile implements SourceReadable {
         return contactList;
     }
 
+    /**
+     * This method get a line from the file, tokenize the chain according to the character , finally
+     * @param line from file
+     * @return contact object according to the model
+     */
     private Contact buildContactData(String line) {
         Contact contact = new Contact();
         String contactName = "", lineToken;
