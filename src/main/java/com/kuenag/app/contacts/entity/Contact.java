@@ -1,8 +1,11 @@
 package com.kuenag.app.contacts.entity;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import lombok.Setter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
 import javax.persistence.*;
 

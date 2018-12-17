@@ -1,12 +1,13 @@
 package com.kuenag.app.contacts.service;
 
 import com.kuenag.app.contacts.entity.Contact;
+import com.kuenag.app.contacts.utils.Constants;
+import com.kuenag.app.contacts.utils.Validators;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -17,8 +18,6 @@ import java.nio.file.Paths;
 @Slf4j
 @Service
 public class ReadFromFile implements SourceReadable {
-
-    private static final int TOKENS_ALLOWED = 2;
 
     @Value("${app.contact.list.file.headers}")
     private String hasHeaders;
@@ -38,7 +37,7 @@ public class ReadFromFile implements SourceReadable {
         log.info("Accessing file in path: {}", pathFile);
         try {
             List<String> linesFromFile = Files.readAllLines(Paths.get(readPath()));
-            for (int i = validateHeaders(); i < linesFromFile.size(); i++) {
+            for (int i = verifyHeaders(); i < linesFromFile.size(); i++) {
                 contactList.add(buildContactData(linesFromFile.get(i)));
             }
         } catch (IOException e) {
@@ -51,10 +50,10 @@ public class ReadFromFile implements SourceReadable {
         Contact contact = new Contact();
         String contactName = "", lineToken;
         StringTokenizer st = new StringTokenizer(line, tokenSeparator);
-        if (st.countTokens() >= TOKENS_ALLOWED) {
+        if (st.countTokens() >= Constants.TOKENS_ALLOWED) {
             while (st.hasMoreTokens()) {
                 lineToken = st.nextToken();
-                if (!isValidUrl(lineToken)) {
+                if (!Validators.isValidURL(lineToken)) {
                     contactName = contactName + lineToken;
                 } else {
                     contact.setUrlAvatar(lineToken);
@@ -67,27 +66,7 @@ public class ReadFromFile implements SourceReadable {
         return contact;
     }
 
-    private static boolean isValidUrl(String url) {
-        try {
-            new URL(url).toURI();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    private static boolean isValidPath(String path) {
-        log.info("Validating if path file is valid: {}", path);
-        try {
-            new URL(path).toURI();
-            return true;
-        } catch (Exception e) {
-            log.info("Is not a valid path: {}", path);
-            return false;
-        }
-    }
-
-    private int validateHeaders() {
+    private int verifyHeaders() {
         log.info("Validating if file has headers names: {}", hasHeaders);
         if ("Y".equalsIgnoreCase(hasHeaders)) {
             return 1;
@@ -97,7 +76,7 @@ public class ReadFromFile implements SourceReadable {
     }
 
     private String readPath(){
-        if(isValidPath(pathFile))
+        if(Validators.isValidURL(pathFile))
             return pathFile;
         else {
             File directory = new File("");

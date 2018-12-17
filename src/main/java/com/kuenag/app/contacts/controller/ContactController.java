@@ -26,7 +26,6 @@ public class ContactController {
         switch (origin) {
             case "file":
                 log.info("Reading data from file");
-                //ReadData contactDataFile = new ReadContactList(new ReadFromFile());
                 items = readContactList.readContactListFromFile();
                 break;
 

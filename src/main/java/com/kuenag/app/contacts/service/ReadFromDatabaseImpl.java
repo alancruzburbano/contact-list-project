@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReadFromDatabase implements SourceReadable {
+public class ReadFromDatabaseImpl implements SourceReadable {
 
     private ContactRepository contactRepository;
 
-    public ReadFromDatabase(ContactRepository contactRepository) {
+    public ReadFromDatabaseImpl(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
     }
 
