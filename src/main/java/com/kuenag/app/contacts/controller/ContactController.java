@@ -20,6 +20,11 @@ public class ContactController {
         this.readContactList = readContactList;
     }
 
+    /**
+     * This method provides a contact list according to the parameter that could be 'file' or 'db'
+     * @param origin the data source that user selected
+     * @return contact list
+     */
     @GetMapping("/contacts")
     public List<Contact> contactList(@RequestParam("orig") String origin) {
         List<Contact> items = new ArrayList<>();
