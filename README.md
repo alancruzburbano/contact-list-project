@@ -11,22 +11,23 @@ To install server apllication, run the following commands:
 git clone https://github.com/alancruzburbano/contact-list-project-server.git
 cd contact-list-project-server
 ```
-If you want to configure application properties edit the file application.properties in the path (/src/main/resources/application.properties) there you can set the file configurations, if you have a connection to database uncoment the group of properties spring.datasource and set the required values
+In application.properties you can find some important configurations over the CSV file to read and the database connection. By default the application use a H2 database, but, if you want to use another database, you need edit the group of properties spring.datasource with the  requiered values, in fact, the application already has ojdbc7 driver to connect with a Oracle database.
 
 ```ruby
     app.contact.list.file.headers=Y                 # validate if incoming file contains headers line
     app.contact.list.file.path=C:\\tmp\\people.csv  # put here the path of file in your machine
     app.contact.list.file.token.separator=,         # separator token configurable in csv
     
-    #spring.datasource.url=jdbc:oracle:thin:workbrain@//localhost:1521/EE.oracle.docker
-    #spring.datasource.username=workbrain
-    #spring.datasource.password=workbrain
-    #spring.datasource.driver.class-name=oracle.jdbc.driver.OracleDriver
+    # H2 database settings
+    #spring.h2.console.enabled=true
+    #spring.datasource.url=jdbc:h2:mem:testdb
+    #spring.datasource.driverClassName=org.h2.Driver
+    #spring.datasource.username=sa
+    #spring.datasource.password=
+    #spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 ```
 
- If you want to use a database conection is also necesary configure the table and columns names in the entity \src\main\java\com\kuenag\app\contacts\entity\Contact.java using your table name and columns (remember that this table must have an ID attribute to be used for JPA). Once configurations were done, save changes.
-
-To run the serverapplication, just execute the following command:
+To run the server application, just execute the following command:
  
 ```bash
 ./gradlew bootRun
