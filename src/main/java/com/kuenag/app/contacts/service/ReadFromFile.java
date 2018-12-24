@@ -2,7 +2,7 @@ package com.kuenag.app.contacts.service;
 
 import com.kuenag.app.contacts.entity.Contact;
 import com.kuenag.app.contacts.utils.Constants;
-import com.kuenag.app.contacts.utils.Validators;
+import com.kuenag.app.contacts.utils.TextValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * This is the concrete implementation of SourceReadable for
+ * file method of lecture, this class reads the application.properties
+ * and perform the creation of a list of contacts, validating URL format and
+ * is able to skip the first line of file if app.contact.list.file.headers property is Y
+ *
+ * @author  Alvaro Andres Cruz Burbano
+ */
 @Slf4j
 @Service
 public class ReadFromFile implements SourceReadable {
@@ -64,7 +72,7 @@ public class ReadFromFile implements SourceReadable {
         if (st.countTokens() >= Constants.TOKENS_ALLOWED) {
             while (st.hasMoreTokens()) {
                 lineToken = st.nextToken();
-                if (!Validators.isValidURL(lineToken)) {
+                if (!TextValidator.isValidURL(lineToken)) {
                     contactName = contactName + lineToken;
                 } else {
                     contact.setUrlAvatar(lineToken);
@@ -87,10 +95,10 @@ public class ReadFromFile implements SourceReadable {
     }
 
     private String readPath(){
-        if(Validators.isValidURL(pathFile))
+        if(TextValidator.isValidURL(pathFile))
             return pathFile;
         else {
-            File directory = new File("");
+            File directory = new File(""); //Retrieve the root project path
             log.info("Using default file in project folder: {}",directory.getAbsolutePath() + defaultPathFile);
             return directory.getAbsolutePath() + defaultPathFile;
         }

@@ -6,6 +6,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This is the concrete implementation of SourceReadable for
+ * database method of lecture, this class uses a ContactRepository object
+ * that at the same time is using JPA
+ *
+ * @author  Alvaro Andres Cruz Burbano
+ */
+
 @Service
 public class ReadFromDatabase implements SourceReadable {
 

@@ -5,6 +5,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This Class implements a simple contract
+ * Is a service that  returns a SourceReadable (contract)
+ * that could be from file or database
+ *
+ * @author  Alvaro Andres Cruz Burbano
+ */
+
 @Service
 public class ReadContactList implements ReadData {
 
