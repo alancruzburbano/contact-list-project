@@ -11,7 +11,11 @@ To install server apllication, run the following commands:
 git clone https://github.com/alancruzburbano/contact-list-project-server.git
 cd contact-list-project-server
 ```
-In application.properties you can find some important configurations over the CSV file to read and the database connection. By default the application use a H2 database, but, if you want to use another database, you need edit the group of properties spring.datasource with the  requiered values, in fact, the application already has ojdbc7 driver to connect with a Oracle database.
+In application.properties you can find some important configurations over the CSV file to read and the database connection. By default the application use a H2 database that could be managed using the following url once the application is running:
+
+    http://localhost:8080/h2-console/
+
+The data inserted in the database can be found in  /src/main/resources/data.sql file which is the same used in the csv file. If you want to use another database, you need edit the group of properties spring.datasource with the  requiered values, in fact, the application already has ojdbc7 driver to connect with a Oracle database.
 
 ```ruby
     app.contact.list.file.headers=Y                 # validate if incoming file contains headers line
