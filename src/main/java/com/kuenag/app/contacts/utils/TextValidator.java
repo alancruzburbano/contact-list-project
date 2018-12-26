@@ -1,9 +1,11 @@
 package com.kuenag.app.contacts.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import java.nio.file.Files;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
@@ -17,13 +19,19 @@ import java.nio.file.Paths;
 @Slf4j
 public class TextValidator {
 
-    public static boolean isValidURL(String path) {
+    public static boolean isValidURL(String textUrl) {
+        URL u = null;
         try {
-            new URL(path).toURI();
-            return true;
-        } catch (Exception e) {
+            u = new URL(textUrl);
+        } catch (MalformedURLException e) {
             return false;
         }
+        try {
+            u.toURI();
+        } catch (URISyntaxException e) {
+            return false;
+        }
+        return true;
     }
 
     public static boolean isValidFilePath(String path) {

@@ -9,6 +9,7 @@ import java.util.List;
  *
  * @author  Alvaro Andres Cruz Burbano
  */
+
 public interface SourceReadable {
     List<Contact> readItems();
 }

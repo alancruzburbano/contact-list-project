@@ -12,6 +12,5 @@ import java.util.List;
  */
 public interface ReadData {
     List<Contact> readContactListFromFile();
-
     List<Contact> readContactListFromDatabase();
 }

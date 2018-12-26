@@ -10,7 +10,7 @@ import java.util.List;
  * Is a service that  returns a SourceReadable (contract)
  * that could be from file or database
  *
- * @author  Alvaro Andres Cruz Burbano
+ * @author Alvaro Andres Cruz Burbano
  */
 
 @Service
@@ -26,7 +26,6 @@ public class ReadContactList implements ReadData {
 
     @Override
     public List<Contact> readContactListFromFile() {
-
         return readFromFile.readItems();
     }
 
