@@ -24,7 +24,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Contact {
     @Id
-    @SequenceGenerator(name="seq_contact", initialValue=1)
+    @SequenceGenerator(name="seq_contact", initialValue=1, allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_contact")
     private Long id;
     @Getter

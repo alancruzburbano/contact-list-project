@@ -32,9 +32,6 @@ public class ReadFromFile implements SourceReadable {
     @Value("${app.contact.list.file.path}")
     private String pathFile;
 
-    @Value("${app.contact.list.file.default.path}")
-    private String defaultPathFile;
-
     @Value("${app.contact.list.file.token.separator}")
     private String tokenSeparator;
 
@@ -69,10 +66,9 @@ public class ReadFromFile implements SourceReadable {
     private Contact processFileLine(String line, int lineNumber) {
         StringTokenizer st = new StringTokenizer(line, tokenSeparator);
         if (st.countTokens() >= Constants.MIN_TOKENS_NUM) {
-            log.info("Validating fields format for line: {}",lineNumber);
             return buildContactFromTokens(st);
         } else {
-            log.error("The line not contains the minimum number of tokens required, null register in line: {}", line);
+            log.error("The line {} not contains the minimum number of tokens required, null register in line: {}",lineNumber, line);
             return null;
         }
     }
@@ -127,8 +123,8 @@ public class ReadFromFile implements SourceReadable {
         else {
             File directory = new File(""); //Retrieve the root project path
             log.info("The Path in app.contact.list.file.path is not valid, using default " +
-                    "file in project folder: {}",directory.getAbsolutePath() + defaultPathFile);
-            return directory.getAbsolutePath() + defaultPathFile;
+                    "file in project folder: {}",directory.getAbsolutePath() + Constants.DEFAULT_FILE_PATH);
+            return directory.getAbsolutePath() + Constants.DEFAULT_FILE_PATH;
         }
     }
 
