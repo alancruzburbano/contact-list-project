@@ -35,18 +35,16 @@ public class ContactController {
     @GetMapping("/contacts")
     public List<Contact> contactList(@RequestParam("orig") String origin) {
         List<Contact> items = new ArrayList<>();
-        if (origin.equalsIgnoreCase(Constants.READ_FROM_FILE)) {
+        if (Constants.READ_FROM_FILE.equalsIgnoreCase(origin)) {
             log.info("Reading data from file");
             items = readContactList.readContactListFromFile();
         }
-        if (origin.equalsIgnoreCase(Constants.READ_FROM_DATABASE)) {
+        else if (Constants.READ_FROM_DATABASE.equalsIgnoreCase(origin)) {
             log.info("Reading data from database");
             items = readContactList.readContactListFromDatabase();
         }
-        if (items.size() < Constants.MIN_ITEMS_ALLOWED) {
+        else if (items.size() < Constants.MIN_ITEMS_ALLOWED)
             log.error("The list of contacts is empty");
-        }
         return items;
     }
-
 }

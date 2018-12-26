@@ -1,8 +1,10 @@
 package com.kuenag.app.contacts.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import java.nio.file.Files;
 
 import java.net.URL;
+import java.nio.file.Paths;
 
 /**
  * Format validator that can be used in different application layers
@@ -16,14 +18,16 @@ import java.net.URL;
 public class TextValidator {
 
     public static boolean isValidURL(String path) {
-        log.info("Validating if incoming path is valid: {}", path);
         try {
             new URL(path).toURI();
             return true;
         } catch (Exception e) {
-            log.info("Is not a valid path: {}", path);
             return false;
         }
+    }
+
+    public static boolean isValidFilePath(String path) {
+        return Files.exists(Paths.get(path));
     }
 
 }

@@ -12,7 +12,7 @@ import javax.persistence.*;
 /**
  * The Entity that represents the data contained in
  * the model object CONTACT
- * NAME: The name and surename of the contact
+ * NAME: The contact name and surname
  * AVATAR_URL: A link that address to an contact avatar
  *
  * @author  Alvaro Andres Cruz Burbano

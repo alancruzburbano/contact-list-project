@@ -20,11 +20,13 @@ public class ReadFromDatabase implements SourceReadable {
     private ContactRepository contactRepository;
 
     public ReadFromDatabase(ContactRepository contactRepository) {
+
         this.contactRepository = contactRepository;
     }
 
     @Override
     public List<Contact> readItems() {
+
         return contactRepository.findAll();
     }
 }

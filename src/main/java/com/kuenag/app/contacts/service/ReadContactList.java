@@ -26,6 +26,7 @@ public class ReadContactList implements ReadData {
 
     @Override
     public List<Contact> readContactListFromFile() {
+
         return readFromFile.readItems();
     }
 
