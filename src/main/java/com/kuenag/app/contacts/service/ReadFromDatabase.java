@@ -11,7 +11,7 @@ import java.util.List;
  * database method of lecture, this class uses a ContactRepository object
  * that at the same time is using JPA
  *
- * @author  Alvaro Andres Cruz Burbano
+ * @author Alvaro Andres Cruz Burbano
  */
 
 @Service

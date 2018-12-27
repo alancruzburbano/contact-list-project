@@ -12,7 +12,7 @@ import java.util.List;
  * A simple contract with a single method which
  * retrieve the contact list
  *
- * @author  Alvaro Andres Cruz Burbano
+ * @author Alvaro Andres Cruz Burbano
  */
 
 @RepositoryRestResource

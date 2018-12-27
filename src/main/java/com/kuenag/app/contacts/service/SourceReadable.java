@@ -7,9 +7,9 @@ import java.util.List;
 /**
  * Contract with common abstraction to read information
  *
- * @author  Alvaro Andres Cruz Burbano
+ * @author Alvaro Andres Cruz Burbano
  */
-
+@FunctionalInterface
 public interface SourceReadable {
     List<Contact> readItems();
 }

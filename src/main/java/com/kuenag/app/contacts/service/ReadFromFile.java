@@ -2,25 +2,26 @@ package com.kuenag.app.contacts.service;
 
 import com.kuenag.app.contacts.entity.Contact;
 import com.kuenag.app.contacts.utils.Constants;
-import com.kuenag.app.contacts.utils.TextValidator;
+import com.kuenag.app.contacts.utils.TextVerifiable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * This is the concrete implementation of SourceReadable for
  * file method of lecture, this class reads the application.properties file
  * and perform the creation of a contact list
  *
- * @author  Alvaro Andres Cruz Burbano
+ * @author Alvaro Andres Cruz Burbano
  */
 @Slf4j
 @Service
@@ -35,12 +36,23 @@ public class ReadFromFile implements SourceReadable {
     @Value("${app.contact.list.file.token.separator}")
     private String tokenSeparator;
 
+    TextVerifiable verifyUrl = (text) -> {
+        try {
+            new URL(text).toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    };
+
+    TextVerifiable verifyPath = (text) -> Files.exists(Paths.get(text));
+
     /**
      * Contact list from file stored in customized path or default path, the parameters comes from application.properties
      * if the system cannot find the path from  app.contact.list.file.path then will use app.contact.list.file.default.path that
      * will use the file placed inside the project.
      *
-     * @return  contact list
+     * @return contact list
      */
     @Override
     public List<Contact> readItems() {
@@ -51,7 +63,7 @@ public class ReadFromFile implements SourceReadable {
                 contactList.add(processFileLine(linesFromFile.get(i), i));
             }
         } catch (IOException e) {
-            log.error("The system cannot read the file on given path: {}", pathFile);
+            log.error("The system cannot read the file on given path: {} message: {}", pathFile, e.getLocalizedMessage());
         }
         return contactList;
     }
@@ -65,12 +77,13 @@ public class ReadFromFile implements SourceReadable {
      */
     private Contact processFileLine(String line, int lineNumber) {
         StringTokenizer st = new StringTokenizer(line, tokenSeparator);
+        Contact contactLine = null;
         if (st.countTokens() >= Constants.MIN_TOKENS_NUM) {
-            return buildContactFromTokens(st);
+            contactLine = buildContactFromTokens(st);
         } else {
-            log.error("The line {} not contains the minimum number of tokens required, null register in line: {}",lineNumber, line);
-            return null;
+            log.error("The line {} not contains the minimum number of tokens required, null register in line: {}", lineNumber, line);
         }
+        return contactLine;
     }
 
     /**
@@ -80,12 +93,12 @@ public class ReadFromFile implements SourceReadable {
      * @param st String tokenizer object that will be used to create a contact object
      * @return Contact object from tokens
      */
-    private Contact buildContactFromTokens(StringTokenizer st){
+    private Contact buildContactFromTokens(StringTokenizer st) {
         Contact contact = new Contact();
         String contactName = "", lineToken;
         while (st.hasMoreTokens()) {
             lineToken = st.nextToken();
-            if (!TextValidator.isValidURL(lineToken)) {
+            if (!verifyUrl.verify(lineToken)) {
                 contactName = contactName + lineToken;
             } else {
                 contact.setUrlAvatar(lineToken);
@@ -115,15 +128,14 @@ public class ReadFromFile implements SourceReadable {
      *
      * @return Custom path or default path.
      */
-    private String readPath(){
-        if(TextValidator.isValidFilePath(pathFile)) {
-            log.info("Read file in provided path: {}",pathFile);
+    private String readPath() {
+        if (verifyPath.verify(pathFile)) {
+            log.info("Read file in provided path: {}", pathFile);
             return pathFile;
-        }
-        else {
+        } else {
             File directory = new File(""); //Retrieve the root project path
             log.info("The Path in app.contact.list.file.path is not valid, using default " +
-                    "file in project folder: {}",directory.getAbsolutePath() + Constants.DEFAULT_FILE_PATH);
+                    "file in project folder: {}", directory.getAbsolutePath() + Constants.DEFAULT_FILE_PATH);
             return directory.getAbsolutePath() + Constants.DEFAULT_FILE_PATH;
         }
     }

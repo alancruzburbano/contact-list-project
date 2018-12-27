@@ -1,11 +1,6 @@
 package com.kuenag.app.contacts.entity;
 
-import lombok.Setter;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,17 +10,17 @@ import javax.persistence.*;
  * NAME: The contact name and surname
  * AVATAR_URL: A link that address to an contact avatar
  *
- * @author  Alvaro Andres Cruz Burbano
+ * @author Alvaro Andres Cruz Burbano
  */
-@Entity(name="CONTACT")
+@Entity(name = "CONTACT")
 @Table(name = "CONTACT")
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Contact {
     @Id
-    @SequenceGenerator(name="seq_contact", initialValue=1, allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_contact")
+    @SequenceGenerator(name = "seq_contact", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_contact")
     private Long id;
     @Getter
     @Setter

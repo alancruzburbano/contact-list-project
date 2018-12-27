@@ -6,11 +6,12 @@ import java.util.List;
 
 /**
  * Contract with implemented methods to read contact list
- *This will be used by the client
+ * This will be used by the client
  *
- * @author  Alvaro Andres Cruz Burbano
+ * @author Alvaro Andres Cruz Burbano
  */
 public interface ReadData {
     List<Contact> readContactListFromFile();
+
     List<Contact> readContactListFromDatabase();
 }
