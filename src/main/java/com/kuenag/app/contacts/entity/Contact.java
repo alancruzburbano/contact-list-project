@@ -31,4 +31,9 @@ public class Contact {
     @Setter
     @Column(name = "AVATAR_URL", length = 300)
     private String urlAvatar;
+
+    public Contact(@NonNull String name, String urlAvatar) {
+        this.name = name;
+        this.urlAvatar = urlAvatar;
+    }
 }

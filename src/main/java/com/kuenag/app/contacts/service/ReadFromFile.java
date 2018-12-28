@@ -47,6 +47,11 @@ public class ReadFromFile implements SourceReadable {
 
     TextVerifiable verifyPath = (text) -> Files.exists(Paths.get(text));
 
+    TextVerifiable verifyName = (text) -> {
+        String expression = Constants.VALIDATE_NAME_REGULAR_EXPRESSION;
+        return text.matches(expression);
+    };
+
     /**
      * Contact list from file stored in customized path or default path, the parameters comes from application.properties
      * if the system cannot find the path from  app.contact.list.file.path then will use app.contact.list.file.default.path that
@@ -60,7 +65,10 @@ public class ReadFromFile implements SourceReadable {
         try {
             List<String> linesFromFile = Files.readAllLines(Paths.get(readPath()));
             for (int i = verifyHeaders(); i < linesFromFile.size(); i++) {
-                contactList.add(processFileLine(linesFromFile.get(i), i));
+                Contact item = processFileLine(linesFromFile.get(i), i);
+                if(null != item){
+                    contactList.add(item);
+                }
             }
         } catch (IOException e) {
             log.error("The system cannot read the file on given path: {} message: {}", pathFile, e.getLocalizedMessage());
@@ -94,18 +102,16 @@ public class ReadFromFile implements SourceReadable {
      * @return Contact object from tokens
      */
     private Contact buildContactFromTokens(StringTokenizer st) {
-        Contact contact = new Contact();
-        String contactName = "", lineToken;
+        String contactName = "", urlAvatar = "", lineToken;
         while (st.hasMoreTokens()) {
             lineToken = st.nextToken();
-            if (!verifyUrl.verify(lineToken)) {
+            if (verifyName.verify(lineToken)) {
                 contactName = contactName + lineToken;
-            } else {
-                contact.setUrlAvatar(lineToken);
+            } else if(verifyUrl.verify(lineToken)){
+                urlAvatar = lineToken;
             }
         }
-        contact.setName(contactName);
-        return contact;
+        return new Contact(contactName,urlAvatar);
     }
 
     /**
