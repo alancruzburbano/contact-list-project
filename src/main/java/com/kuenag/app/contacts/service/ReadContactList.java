@@ -1,6 +1,7 @@
 package com.kuenag.app.contacts.service;
 
 import com.kuenag.app.contacts.entity.Contact;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +17,10 @@ import java.util.List;
 @Service
 public class ReadContactList implements ReadData {
 
-    private SourceReadable readFromFile;
-    private SourceReadable readFromDatabase;
-
-    public ReadContactList(SourceReadable readFromFile, SourceReadable readFromDatabase) {
-        this.readFromFile = readFromFile;
-        this.readFromDatabase = readFromDatabase;
-    }
+    @Autowired
+    SourceReadable readFromFile;
+    @Autowired
+    SourceReadable readFromDatabase;
 
     @Override
     public List<Contact> readContactListFromFile() {
