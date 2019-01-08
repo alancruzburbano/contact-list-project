@@ -4,6 +4,7 @@ import com.kuenag.app.contacts.entity.Contact;
 import com.kuenag.app.contacts.service.ReadData;
 import com.kuenag.app.contacts.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,11 +24,8 @@ import java.util.List;
 @Slf4j
 public class ContactController {
 
-    private ReadData readContactList;
-
-    public ContactController(ReadData readContactList) {
-        this.readContactList = readContactList;
-    }
+    @Autowired
+    ReadData readContactList;
 
     /**
      * This method provides a contact list according to the parameter value of
