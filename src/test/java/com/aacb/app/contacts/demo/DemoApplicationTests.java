@@ -1,4 +1,4 @@
-package com.kuenag.app.contacts.demo;
+package com.aacb.app.contacts.demo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

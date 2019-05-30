@@ -1,8 +1,4 @@
-package com.kuenag.app.contacts.service;
-
-import com.kuenag.app.contacts.entity.Contact;
-
-import java.util.List;
+package com.aacb.app.celebrity.service;
 
 /**
  * Contract with common abstraction to read information
@@ -11,5 +7,5 @@ import java.util.List;
  */
 @FunctionalInterface
 public interface SourceReadable {
-    List<Contact> readItems();
+    void readItems();
 }
