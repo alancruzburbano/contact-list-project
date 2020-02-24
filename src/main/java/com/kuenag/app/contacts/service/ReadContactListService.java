@@ -2,9 +2,9 @@ package com.kuenag.app.contacts.service;
 
 import com.kuenag.app.contacts.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * This Class implements a simple contract
@@ -15,20 +15,13 @@ import java.util.List;
  */
 
 @Service
-public class ReadContactList implements ReadData {
+public class ReadContactListService implements ReadDataService {
 
-    @Autowired
-    SourceReadable readFromFile;
     @Autowired
     SourceReadable readFromDatabase;
 
     @Override
-    public List<Contact> readContactListFromFile() {
-        return readFromFile.readItems();
-    }
-
-    @Override
-    public List<Contact> readContactListFromDatabase() {
-        return readFromDatabase.readItems();
+    public Page<Contact> readContactListFromDatabase(Pageable pageable) {
+        return readFromDatabase.readItems(pageable);
     }
 }

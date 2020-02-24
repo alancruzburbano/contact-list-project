@@ -1,6 +1,8 @@
 package com.kuenag.app.contacts.service;
 
 import com.kuenag.app.contacts.entity.Contact;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -10,7 +12,6 @@ import java.util.List;
  *
  * @author Alvaro Andres Cruz Burbano
  */
-public interface ReadData {
-    List<Contact> readContactListFromFile();
-    List<Contact> readContactListFromDatabase();
+public interface ReadDataService {
+    Page<Contact> readContactListFromDatabase(Pageable pageable);
 }

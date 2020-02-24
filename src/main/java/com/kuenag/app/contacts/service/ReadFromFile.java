@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
  */
 @Slf4j
 @Service
-public class ReadFromFile implements SourceReadable {
+public class ReadFromFile{
 
     @Value("${app.contact.list.file.headers}")
     private String hasHeaders;
@@ -59,7 +59,6 @@ public class ReadFromFile implements SourceReadable {
      *
      * @return contact list
      */
-    @Override
     public List<Contact> readItems() {
         List<Contact> contactList = new ArrayList<>();
         try {

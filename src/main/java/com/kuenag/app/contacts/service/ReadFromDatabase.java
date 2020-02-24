@@ -3,9 +3,10 @@ package com.kuenag.app.contacts.service;
 import com.kuenag.app.contacts.entity.Contact;
 import com.kuenag.app.contacts.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This is the concrete implementation of SourceReadable for
@@ -22,7 +23,8 @@ public class ReadFromDatabase implements SourceReadable {
     ContactRepository contactRepository;
 
     @Override
-    public List<Contact> readItems() {
-        return contactRepository.findAll();
+    @Transactional(readOnly = true)
+    public Page<Contact> readItems(Pageable pageable) {
+        return contactRepository.findAll(pageable);
     }
 }
